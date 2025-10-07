@@ -14,18 +14,17 @@ import ForumTab from '@/components/dnd/ForumTab';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
+  const [characters, setCharacters] = useState<Character[]>([
+    { id: 1, name: 'Торин Молотобоец', class: 'Воин', level: 5, race: 'Дварф', alignment: 'Законопослушный добрый', hp: 45, maxHp: 50 },
+    { id: 2, name: 'Элара Лунный свет', class: 'Волшебник', level: 4, race: 'Эльф', alignment: 'Нейтральный добрый', hp: 28, maxHp: 28 },
+    { id: 3, name: 'Коготь теней', class: 'Плут', level: 6, race: 'Полуэльф', alignment: 'Хаотичный нейтральный', hp: 38, maxHp: 42 },
+  ]);
 
   const gameRooms: GameRoom[] = [
     { id: 1, name: 'Логово Дракона', campaign: 'Затерянная шахта Фандельвера', players: 3, maxPlayers: 5, level: '1-5', status: 'active' },
     { id: 2, name: 'Таверна у развилки', campaign: 'Проклятие Страда', players: 4, maxPlayers: 6, level: '3-8', status: 'waiting' },
     { id: 3, name: 'Гильдия искателей', campaign: 'Водный Глубь', players: 5, maxPlayers: 5, level: '5-10', status: 'full' },
     { id: 4, name: 'Подземелье забытых', campaign: 'Гробница Аннигиляции', players: 2, maxPlayers: 4, level: '1-11', status: 'waiting' },
-  ];
-
-  const characters: Character[] = [
-    { id: 1, name: 'Торин Молотобоец', class: 'Воин', level: 5, race: 'Дварф', alignment: 'Законопослушный добрый', hp: 45, maxHp: 50 },
-    { id: 2, name: 'Элара Лунный свет', class: 'Волшебник', level: 4, race: 'Эльф', alignment: 'Нейтральный добрый', hp: 28, maxHp: 28 },
-    { id: 3, name: 'Коготь теней', class: 'Плут', level: 6, race: 'Полуэльф', alignment: 'Хаотичный нейтральный', hp: 38, maxHp: 42 },
   ];
 
   const spells: Spell[] = [
@@ -120,7 +119,8 @@ const Index = () => {
             <HomeTab 
               gameRooms={gameRooms} 
               getStatusColor={getStatusColor} 
-              getStatusText={getStatusText} 
+              getStatusText={getStatusText}
+              onNavigate={setActiveTab}
             />
           </TabsContent>
 
@@ -133,7 +133,10 @@ const Index = () => {
           </TabsContent>
 
           <TabsContent value="characters">
-            <CharactersTab characters={characters} />
+            <CharactersTab 
+              characters={characters}
+              onAddCharacter={(newChar) => setCharacters([...characters, newChar])}
+            />
           </TabsContent>
 
           <TabsContent value="rules">

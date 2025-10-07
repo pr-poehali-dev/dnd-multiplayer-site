@@ -1,19 +1,36 @@
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { Character } from './types';
+import CharacterCreator from './CharacterCreator';
 
 interface CharactersTabProps {
   characters: Character[];
+  onAddCharacter: (character: Character) => void;
 }
 
-const CharactersTab = ({ characters }: CharactersTabProps) => {
+const CharactersTab = ({ characters, onAddCharacter }: CharactersTabProps) => {
+  const [showCreator, setShowCreator] = useState(false);
   return (
     <div className="animate-fade-in">
+      {showCreator && (
+        <CharacterCreator
+          onClose={() => setShowCreator(false)}
+          onSave={(character) => {
+            onAddCharacter(character);
+            setShowCreator(false);
+          }}
+        />
+      )}
+
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-cinzel font-bold">Мои персонажи</h2>
-        <Button className="bg-primary hover:bg-primary/90 font-cinzel">
+        <Button 
+          className="bg-primary hover:bg-primary/90 font-cinzel"
+          onClick={() => setShowCreator(true)}
+        >
           <Icon name="UserPlus" className="mr-2 h-4 w-4" />
           Создать персонажа
         </Button>

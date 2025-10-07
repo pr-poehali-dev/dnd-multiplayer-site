@@ -3,14 +3,16 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { GameRoom } from './types';
+import DiceRoller from './DiceRoller';
 
 interface HomeTabProps {
   gameRooms: GameRoom[];
   getStatusColor: (status: string) => string;
   getStatusText: (status: string) => string;
+  onNavigate: (tab: string) => void;
 }
 
-const HomeTab = ({ gameRooms, getStatusColor, getStatusText }: HomeTabProps) => {
+const HomeTab = ({ gameRooms, getStatusColor, getStatusText, onNavigate }: HomeTabProps) => {
   return (
     <div className="animate-fade-in">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -23,7 +25,11 @@ const HomeTab = ({ gameRooms, getStatusColor, getStatusText }: HomeTabProps) => 
             <CardDescription className="font-fell">Присоединитесь к открытой комнате или создайте свою</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-cinzel" size="lg">
+            <Button 
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-cinzel" 
+              size="lg"
+              onClick={() => onNavigate('rooms')}
+            >
               Найти игру
             </Button>
           </CardContent>
@@ -38,7 +44,11 @@ const HomeTab = ({ gameRooms, getStatusColor, getStatusText }: HomeTabProps) => 
             <CardDescription className="font-fell">Создайте нового персонажа для приключений</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-cinzel" size="lg">
+            <Button 
+              className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-cinzel" 
+              size="lg"
+              onClick={() => onNavigate('characters')}
+            >
               Новый персонаж
             </Button>
           </CardContent>
@@ -53,7 +63,11 @@ const HomeTab = ({ gameRooms, getStatusColor, getStatusText }: HomeTabProps) => 
             <CardDescription className="font-fell">Изучите библиотеку заклинаний и магических предметов</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-cinzel" size="lg">
+            <Button 
+              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-cinzel" 
+              size="lg"
+              onClick={() => onNavigate('library')}
+            >
               Открыть библиотеку
             </Button>
           </CardContent>
@@ -95,6 +109,10 @@ const HomeTab = ({ gameRooms, getStatusColor, getStatusText }: HomeTabProps) => 
           </div>
         </CardContent>
       </Card>
+
+      <div className="mt-8">
+        <DiceRoller />
+      </div>
     </div>
   );
 };
